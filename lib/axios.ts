@@ -34,8 +34,4 @@ client.interceptors.response.use(
   }
 )
 
-client.interceptors.request.use((request) => {
-  //
-})
-
 export default client
