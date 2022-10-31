@@ -5,7 +5,7 @@ import router from 'next/router'
 import { message } from 'antd'
 
 const client = axios.create({
-  baseURL: `${env.apiUrl}/api`,
+  baseURL: `${env.apiUrl}`,
   withCredentials: true
 })
 

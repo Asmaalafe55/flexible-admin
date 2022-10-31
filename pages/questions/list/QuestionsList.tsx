@@ -1,11 +1,11 @@
 import axios from '@/lib/axios'
-import { Table, Modal, Button } from 'antd'
+import { Table, Modal, Button, message } from 'antd'
 import { useState } from 'react'
 import { dehydrate, useQuery, QueryClient } from 'react-query'
 
 const fetchProduct = async () => {
   const prodcuts = await axios.get('https://dummyjson.com/products/1')
-  console.log({ prodcuts })
+
   return prodcuts.data
 }
 
@@ -23,17 +23,18 @@ export const getServerSideProps = async () => {
 
 const QuestionsList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const { data, isLoading, isError } = useQuery('product', () => fetchProduct())
+  const { data, isLoading, isError, refetch } = useQuery('product', () => fetchProduct())
 
   // console.log({ data, isLoading })
 
   return (
     <div>
-      {data.title}
+      <span>{data.title}</span>
       <Button
         type="primary"
         onClick={() => {
           setIsModalOpen(true)
+          // message.info('hello')
         }}
       >
         Open modal
