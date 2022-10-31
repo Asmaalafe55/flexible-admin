@@ -1,0 +1,93 @@
+@import './colors.scss';
+// @import './antd-override.scss';
+
+@font-face {
+  font-family: 'NoirPro';
+  src: url('/fonts/NoirPro-Regular.woff') format('woff'), url('/fonts/NoirPro-Regular.wof2') format('wof2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NoirPro';
+  src: url('/fonts/NoirPro-Bold.woff') format('woff'), url('/fonts/NoirPro-Bold.wof2') format('wof2');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NoirPro';
+  src: url('/fonts/NoirPro-Medium.woff') format('woff'), url('/fonts/NoirPro-Medium.wof2') format('wof2');
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+
+  font-family: 'NoirPro', sans-serif;
+
+  font-feature-settings: 'kern' 1;
+  font-kerning: normal;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+  }
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.icon {
+  font-size: 25px;
+}
+
+.user-select-none {
+  user-select: none;
+}
+
+.auth-container {
+  max-width: 25vw;
+  margin: auto;
+  background-color: white;
+  box-shadow: 0 8px 16px 0 rgb(0 0 0 / 10%);
+  padding: 30px 20px;
+}
+
+@media (max-width: 1490px) {
+  .auth-container {
+    max-width: 40vw;
+  }
+}
+
+@media (max-width: 1200px) {
+  .auth-container {
+    max-width: 60vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-container {
+    max-width: 90vw;
+  }
+}
