@@ -4,15 +4,15 @@ import { useState } from 'react'
 import { dehydrate, useQuery, QueryClient } from 'react-query'
 
 const fetchProduct = async () => {
-  const questions = await axios.get('http://localhost:4000/api/questions')
+  const templates = await axios.get('http://localhost:4000/api/templates')
 
-  return questions.data
+  return templates.data
 }
 
 export const getServerSideProps = async () => {
   const queryClient = new QueryClient()
 
-  await queryClient.prefetchQuery('questions', () => fetchProduct())
+  await queryClient.prefetchQuery('templates', () => fetchProduct())
 
   return {
     props: {
@@ -23,32 +23,36 @@ export const getServerSideProps = async () => {
 
 const columns = [
   {
-    title: 'Question type',
-    dataIndex: 'question_type',
-    key: 'question_type'
+    title: 'Name',
+    dataIndex: 'template_name',
+    key: 'template_name'
   },
   {
-    title: 'Question',
-    dataIndex: 'question',
-    key: 'question'
+    title: 'Img Path',
+    dataIndex: 'template_img',
+    key: 'template_img'
   },
   {
-    title: 'Website type',
-    dataIndex: 'website_type',
-    key: 'website_type'
+    title: 'Keywords',
+    dataIndex: 'template_keywords',
+    key: 'template_keywords'
+  },
+  {
+    title: 'Description',
+    dataIndex: 'template_description',
+    key: 'template_description'
   }
 ]
 
-const QuestionsList = () => {
+const Templates = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const { data, isLoading, isError, refetch } = useQuery('questions', () => fetchProduct())
+  const { data, isLoading, isError, refetch } = useQuery('templates', () => fetchProduct())
   return (
     <div>
       <Button
         type="primary"
         onClick={() => {
           setIsModalOpen(true)
-          // message.info('hello')
         }}
       >
         Open modal
@@ -70,4 +74,4 @@ const QuestionsList = () => {
   )
 }
 
-export default QuestionsList
+export default Templates

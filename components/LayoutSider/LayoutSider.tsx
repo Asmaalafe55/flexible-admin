@@ -25,12 +25,7 @@ const LayoutSider = ({ darkMode }: { darkMode: boolean }) => {
           Questions
         </Menu.Item>
 
-        <Menu.Item
-          key="4"
-          onClick={() => router.push('/questions/list')}
-          icon={<TeamOutlined />}
-          style={{ marginTop: 0 }}
-        >
+        <Menu.Item key="4" onClick={() => router.push('/templates')} icon={<TeamOutlined />} style={{ marginTop: 0 }}>
           Templates
         </Menu.Item>
 
