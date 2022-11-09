@@ -71,6 +71,7 @@ const Templates = () => {
           <Button
             type="primary"
             onClick={() => {
+              console.log(row.template_id)
               onTemplateRemove(row.template_id)
             }}
           >
@@ -84,22 +85,23 @@ const Templates = () => {
   const mutation = useMutation((data: any) => {
     return axios.post('http://localhost:4000/api/template/add', data)
   })
-  const mutation2 = useMutation((template_id: any) => {
-    return axios.post('http://localhost:4000/api/template/remove', template_id)
-  })
-
-  const onTemplateRemove = (template_id: any) => {
-    mutation2.mutate(template_id, {
-      onSuccess: () => {
-        refetch()
-      }
-    })
-  }
 
   const onTemplateAdd = (values: any) => {
     mutation.mutate(values, {
       onSuccess: () => {
         setIsModalOpen(false)
+        refetch()
+      }
+    })
+  }
+
+  const mutation2 = useMutation((template_id) => {
+    return axios.post('http://localhost:4000/api/template/remove', { id: template_id })
+  })
+
+  const onTemplateRemove = (template_id: any) => {
+    mutation2.mutate(template_id, {
+      onSuccess: () => {
         refetch()
       }
     })
