@@ -2,7 +2,7 @@ import axios from '@/lib/axios'
 import { Table, Modal, Button, message } from 'antd'
 import { useState } from 'react'
 import { dehydrate, useQuery, QueryClient, useMutation } from 'react-query'
-import { Image, Form, Input, Select, SelectProps } from 'antd'
+import { Image, Form, Input, Select, SelectProps, Space } from 'antd'
 
 const fetchProduct = async () => {
   const templates = await axios.get('http://localhost:4000/api/templates')
@@ -68,31 +68,52 @@ const Templates = () => {
       key: 'action',
       render: (data: string, row: any) => {
         return (
-          <Button
-            type="primary"
-            onClick={() => {
-              console.log(row.template_id)
-              onTemplateRemove(row.template_id)
-            }}
-          >
-            Remove Template
-          </Button>
+          <Space>
+            <Button
+              type="primary"
+              onClick={() => {
+                onTemplateRemove(row.template_id)
+              }}
+            >
+              Remove
+            </Button>
+            <br />
+            <Button
+              type="primary"
+              onClick={() => {
+                form.setFieldsValue({
+                  name: row.template_name,
+                  imageUrl: row.template_img,
+                  description: row.template_description,
+                  keywords: row.template_keywords,
+                  id: row.template_id
+                })
+
+                setIsModalOpen(true)
+              }}
+            >
+              Edit
+            </Button>
+          </Space>
         )
       }
     }
   ]
 
-  const mutation = useMutation((data: any) => {
-    return axios.post('http://localhost:4000/api/template/add', data)
+  const mutation = useMutation((values: any) => {
+    return axios.post('http://localhost:4000/api/template/add', { data: values })
   })
 
   const onTemplateAdd = (values: any) => {
-    mutation.mutate(values, {
-      onSuccess: () => {
-        setIsModalOpen(false)
-        refetch()
-      }
-    })
+    console.log(values)
+    if (!values.id) {
+      mutation.mutate(values, {
+        onSuccess: () => {
+          setIsModalOpen(false)
+          refetch()
+        }
+      })
+    }
   }
 
   const mutation2 = useMutation((template_id) => {
@@ -107,11 +128,25 @@ const Templates = () => {
     })
   }
 
+  const mutation3 = useMutation((values) => {
+    return axios.post('http://localhost:4000/api/template/edit', values)
+  })
+
+  const onTemplateEdit = (values: any) => {
+    mutation3.mutate(values, {
+      onSuccess: () => {
+        setIsModalOpen(false)
+        refetch()
+      }
+    })
+  }
+
   return (
     <div>
       <Button
         type="primary"
         onClick={() => {
+          form.resetFields()
           setIsModalOpen(true)
         }}
       >
@@ -134,7 +169,9 @@ const Templates = () => {
           labelCol={{ span: 5 }}
           wrapperCol={{ span: 20 }}
           initialValues={{ remember: true }}
-          onFinish={onTemplateAdd}
+          onFinish={(values) => {
+            values.id ? onTemplateEdit(values) : onTemplateAdd(values)
+          }}
           autoComplete="off"
           layout="vertical"
           form={form}
@@ -162,6 +199,9 @@ const Templates = () => {
             rules={[{ required: true, message: 'Please input your template keywords!' }]}
           >
             <Select mode="multiple" allowClear placeholder="Please select Keywords" options={options} />
+          </Form.Item>
+          <Form.Item name="id" noStyle>
+            <Input type="hidden" />
           </Form.Item>
         </Form>
       </Modal>
