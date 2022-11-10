@@ -100,20 +100,18 @@ const Templates = () => {
     }
   ]
 
-  const mutation = useMutation((values: any) => {
-    return axios.post('http://localhost:4000/api/template/add', { data: values })
+  const mutation = useMutation((values) => {
+    return axios.post('http://localhost:4000/api/template/add', values)
   })
 
   const onTemplateAdd = (values: any) => {
     console.log(values)
-    if (!values.id) {
-      mutation.mutate(values, {
-        onSuccess: () => {
-          setIsModalOpen(false)
-          refetch()
-        }
-      })
-    }
+    mutation.mutate(values, {
+      onSuccess: () => {
+        setIsModalOpen(false)
+        refetch()
+      }
+    })
   }
 
   const mutation2 = useMutation((template_id) => {
