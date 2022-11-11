@@ -1,5 +1,5 @@
 import axios from '@/lib/axios'
-import { Table, Modal, Button, message } from 'antd'
+import { Table, Modal, Button } from 'antd'
 import { useState } from 'react'
 import { dehydrate, useQuery, QueryClient, useMutation } from 'react-query'
 import { Image, Form, Input, Select, SelectProps, Space } from 'antd'
@@ -26,7 +26,28 @@ const options: SelectProps['options'] = [
   { label: 'blog', value: 'blog', key: '1' },
   { label: 'store', value: 'store', key: '2' },
   { label: 'app', value: 'app', key: '3' },
-  { label: 'travel', value: 'travel', key: '4' }
+  { label: 'travel', value: 'travel', key: '4' },
+  { label: 'photograph', value: 'photograph', key: '5' },
+  { label: 'homepage', value: 'homepage', key: '6' },
+  { label: 'portfolio ', value: 'portfolio ', key: '7' },
+  { label: 'photos', value: 'photos', key: '8' },
+  { label: 'films', value: 'films', key: '9' },
+  { label: 'liefstyle', value: 'liefstyle', key: '10' },
+  { label: 'makeup', value: 'makeup', key: '11' },
+  { label: 'clothing', value: 'clothing', key: '12' },
+  { label: 'eCommerce', value: 'eCommerce', key: '13' },
+  { label: 'fashion', value: 'fashion', key: '14' },
+  { label: 'shop', value: 'shop', key: '15' },
+  { label: 'accessories', value: 'accessories', key: '16' },
+  { label: 'business', value: 'business', key: '17' },
+  { label: 'investing', value: 'investing', key: '18' },
+  { label: 'event', value: 'event', key: '19' },
+  { label: 'music', value: 'music', key: '20' },
+  { label: 'graphic designers', value: 'graphic designers', key: '21' },
+  { label: 'application', value: 'application', key: '22' },
+  { label: 'startup', value: 'startup', key: '23' },
+  { label: 'creative', value: 'creative', key: '24' },
+  { label: 'company', value: 'company', key: '25' }
 ]
 const Templates = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -141,16 +162,18 @@ const Templates = () => {
 
   return (
     <div>
-      <Button
-        type="primary"
-        onClick={() => {
-          form.resetFields()
-          setIsModalOpen(true)
-        }}
-      >
-        Add Template
-      </Button>
-      <Table dataSource={data} columns={columns} />
+      <Space direction="vertical">
+        <Button
+          type="primary"
+          onClick={() => {
+            form.resetFields()
+            setIsModalOpen(true)
+          }}
+        >
+          Add Template
+        </Button>
+        <Table dataSource={data} columns={columns} />
+      </Space>
       <Modal
         title="Add Template"
         open={isModalOpen}
